@@ -1,70 +1,70 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#214c35">
-<title>واحة الطير - الحسابات</title>
+<title>واحة الطير</title>
 <style>
-:root{--green:#214c35;--green2:#3d7652;--gold:#b99a4c;--paper:#f6f5ef;--ink:#243329;--red:#a23c32}
+:root{--green:#214c35;--green2:#3d7652;--gold:#b99a4c;--bg:#f5f5ef;--red:#a33b32;--text:#26382b}
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;padding:16px;max-width:900px;margin:auto}
-header{background:linear-gradient(135deg,var(--green),#37694a);color:white;border-radius:18px;padding:20px;text-align:center;border-bottom:5px solid var(--gold)}
-header h1{margin:0 0 5px;font-size:28px}
-header p{margin:0;color:#e5e9df;font-size:14px}
-nav{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
-button{border:0;border-radius:10px;padding:11px 14px;background:var(--green);color:white;font-weight:700;font-size:14px;cursor:pointer}
-button.secondary{background:#e8e3d2;color:var(--green)}
+body{margin:0 auto;padding:14px;max-width:950px;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif}
+header{background:linear-gradient(135deg,#214c35,#3d7652);color:white;padding:24px 14px;text-align:center;border-bottom:5px solid var(--gold);border-radius:16px}
+header h1{margin:0 0 8px;font-size:29px}
+header p{margin:0;font-size:14px;color:#e8eee6}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+button{border:0;border-radius:9px;padding:11px 15px;background:var(--green);color:white;font-weight:bold;font-size:14px;cursor:pointer}
+button.light{background:#e8e5d8;color:var(--green)}
 button.danger{background:var(--red)}
-.tab.active{background:var(--gold);color:#202b20}
-.panel{background:white;border:1px solid #e4e2d8;border-radius:15px;padding:16px;margin:12px 0;box-shadow:0 2px 8px #1b32110b}
-.panel h2{font-size:18px;margin:0 0 13px;color:var(--green)}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.metric{padding:14px;border-radius:12px;background:#f0f3ed}
-.metric small{display:block;color:#59685c}
-.metric strong{display:block;font-size:21px;margin-top:5px;overflow-wrap:anywhere}
+button.active{background:var(--gold);color:#243329}
+.panel{background:white;border:1px solid #e3e4dc;border-radius:14px;padding:15px;margin:12px 0}
+h2{color:var(--green);font-size:19px;margin:0 0 14px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.metric{background:#eff3ec;padding:14px;border-radius:11px}
+.metric small{display:block;color:#59695c}
+.metric strong{display:block;font-size:20px;margin-top:7px;overflow-wrap:anywhere}
 .green{color:var(--green2)}
-.red{color:var(--red)}
+.redtext{color:var(--red)}
 form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-label{display:block;font-size:13px;font-weight:700;color:#4d5d50}
-input,select,textarea{display:block;width:100%;margin-top:5px;padding:11px;border:1px solid #d8ded4;border-radius:9px;background:#fff;color:var(--ink);font:inherit}
-textarea{min-height:70px;resize:vertical}
+label{display:block;font-weight:bold;font-size:13px}
+input,select,textarea{width:100%;margin-top:5px;padding:11px;border:1px solid #d7ded5;border-radius:8px;background:white;color:var(--text);font:inherit}
+textarea{min-height:70px}
 .wide{grid-column:1/-1}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:right;padding:9px 7px;border-bottom:1px solid #e8e9e3;vertical-align:top}
-th{background:#edf1e9;color:var(--green)}
 .tablewrap{overflow-x:auto}
-.pill{display:inline-block;border-radius:99px;padding:3px 8px;font-size:12px;background:#e9f2e9;color:var(--green)}
-.pill.expense{background:#f8e8e6;color:var(--red)}
-.muted{color:#677268;font-size:12px}
-.empty{text-align:center;color:#7b857c;padding:20px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:right;padding:10px 7px;border-bottom:1px solid #e5e7df;vertical-align:top}
+th{background:#edf1e9;color:var(--green)}
+.pill{display:inline-block;padding:4px 8px;border-radius:20px;background:#e5f1e6;color:var(--green)}
+.pill.expense{background:#f8e7e5;color:var(--red)}
+.muted{color:#69766c;font-size:12px}
+.empty{text-align:center;padding:22px;color:#7a857b}
 [hidden]{display:none!important}
-@media(min-width:650px){.cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:650px){.cards{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:480px){body{padding:9px}.panel{padding:12px}form{grid-template-columns:1fr}.wide{grid-column:auto}header h1{font-size:27px}}
 @media print{
-body{background:white;padding:0;max-width:none}
-header{background:#214c35!important;color:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.no-print,form,nav,.actions button,.delete-btn{display:none!important}
-.panel{box-shadow:none;break-inside:avoid;border:1px solid #bbb}
-.cards{grid-template-columns:repeat(4,1fr)}
-th{background:#edf1e9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-table{font-size:11px}
+ @page{size:A4;margin:12mm}
+ body{max-width:none;padding:0;background:white;color:#26382b}
+ header{background:#214c35!important;color:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ nav,form,.no-print,.delete-btn{display:none!important}
+ .panel{box-shadow:none;break-inside:avoid}
+ .cards{grid-template-columns:repeat(4,1fr)}
+ th{background:#edf1e9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
 </head>
 <body>
-
 <header>
 <h1>واحة الطير</h1>
-<p>برنامج حسابات الدخل والمصروفات وتوزيع صافي الربح</p>
+<p>حسابات المزرعة والدخل والمصروفات والأرباح</p>
 </header>
 
 <nav class="no-print">
-<button class="tab active" data-tab="dashboard">الملخص</button>
-<button class="tab secondary" data-tab="entry">إضافة عملية</button>
-<button class="tab secondary" data-tab="records">سجل العمليات</button>
-<button class="tab secondary" data-tab="reports">التقارير والنسخ الاحتياطي</button>
+<button class="tab active" data-tab="dashboard">الملخص المالي</button>
+<button class="tab light" data-tab="entry">إضافة عملية</button>
+<button class="tab light" data-tab="records">سجل العمليات</button>
+<button class="tab light" data-tab="reports">تقرير PDF</button>
 </nav>
 
 <section id="dashboard" class="view">
@@ -72,24 +72,19 @@ table{font-size:11px}
 <h2>الملخص المالي</h2>
 <div class="cards">
 <div class="metric"><small>إجمالي الدخل</small><strong id="income" class="green">0.000 ر.ع</strong></div>
-<div class="metric"><small>إجمالي المصروفات</small><strong id="expenses" class="red">0.000 ر.ع</strong></div>
+<div class="metric"><small>إجمالي المصروفات</small><strong id="expenses" class="redtext">0.000 ر.ع</strong></div>
 <div class="metric"><small>صافي الربح</small><strong id="profit">0.000 ر.ع</strong></div>
 <div class="metric"><small>عدد العمليات</small><strong id="count">0</strong></div>
 </div>
-<p class="muted">صافي الربح = إجمالي الدخل ناقص إجمالي المصروفات. الإيجار والديون لا تخصم تلقائيًا؛ سجّلها كمصروف إذا قررتم احتسابها ضمن المصروفات.</p>
+<p class="muted">صافي الربح = إجمالي الدخل ناقص إجمالي المصروفات. لا تُخصم الالتزامات أو الإيجار تلقائيًا؛ سجّلها كمصروف عند احتسابها.</p>
 </div>
-
 <div class="panel">
 <h2>توزيع صافي الربح</h2>
-<div class="tablewrap">
-<table>
-<thead><tr><th>المستفيد</th><th>النسبة</th><th>المبلغ المستحق</th></tr></thead>
+<div class="tablewrap"><table>
+<thead><tr><th>المستفيد</th><th>النسبة</th><th>المبلغ</th></tr></thead>
 <tbody id="distribution"></tbody>
-</table>
+</table></div>
 </div>
-<p class="muted">إذا كان صافي الربح سالبًا، فلن تُحسب توزيعات موجبة.</p>
-</div>
-
 <div class="panel">
 <h2>آخر العمليات</h2>
 <div id="recent"></div>
@@ -98,38 +93,24 @@ table{font-size:11px}
 
 <section id="entry" class="view" hidden>
 <div class="panel">
-<h2>تسجيل دخل أو مصروف</h2>
+<h2>إضافة دخل أو مصروف</h2>
 <form id="entryForm">
 <label>نوع العملية
 <select id="type" required>
 <option value="income">دخل</option>
 <option value="expense">مصروف</option>
-</select>
-</label>
-
-<label>المبلغ (ريال عماني)
-<input id="amount" type="number" min="0.001" step="0.001" placeholder="125.500" required>
-</label>
-
-<label>التاريخ
-<input id="date" type="date" required>
-</label>
-
-<label>التصنيف
-<select id="category" required></select>
-</label>
-
-<label class="wide">البيان / الوصف
-<input id="description" maxlength="120" placeholder="مثال: بيع محصول مانجو" required>
-</label>
-
-<label class="wide">ملاحظات (اختياري)
-<textarea id="notes" maxlength="500" placeholder="تفاصيل إضافية"></textarea>
-</label>
-
+</select></label>
+<label>المبلغ بالريال العماني
+<input id="amount" type="number" min="0.001" step="0.001" placeholder="150.000" required></label>
+<label>التاريخ<input id="date" type="date" required></label>
+<label>التصنيف<select id="category" required></select></label>
+<label class="wide">البيان
+<input id="description" maxlength="150" placeholder="مثال: بيع محصول مانجو" required></label>
+<label class="wide">ملاحظات
+<textarea id="notes" maxlength="500" placeholder="ملاحظات اختيارية"></textarea></label>
 <div class="wide actions">
 <button type="submit">حفظ العملية</button>
-<button type="reset" class="secondary">مسح الحقول</button>
+<button type="reset" class="light">مسح الحقول</button>
 </div>
 </form>
 </div>
@@ -139,327 +120,161 @@ table{font-size:11px}
 <div class="panel">
 <h2>سجل العمليات</h2>
 <div class="no-print" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-<label>تصفية النوع
+<label>نوع العملية
 <select id="filterType">
-<option value="all">الكل</option>
+<option value="all">جميع العمليات</option>
 <option value="income">الدخل</option>
 <option value="expense">المصروفات</option>
-</select>
-</label>
-<label>بحث في الوصف
-<input id="search" placeholder="اكتب كلمة للبحث">
-</label>
+</select></label>
+<label>البحث<input id="search" placeholder="ابحث عن عملية"></label>
 </div>
-<div class="tablewrap" id="recordsTable"></div>
+<div id="recordsTable" class="tablewrap"></div>
 </div>
 </section>
 
 <section id="reports" class="view" hidden>
 <div class="panel">
-<h2>التقارير والنسخ الاحتياطي</h2>
-<p>يمكنك طباعة التقرير أو حفظه PDF، وتنزيل CSV ونسخة JSON للاحتفاظ بالبيانات واستعادتها لاحقًا.</p>
-
-<div class="actions no-print">
-<button id="pdfBtn">طباعة / حفظ PDF</button>
-<button id="csvBtn" class="secondary">تنزيل CSV</button>
-<button id="backupBtn" class="secondary">تنزيل نسخة احتياطية JSON</button>
-</div>
-
-<div class="panel">
-<h2>استعادة نسخة احتياطية</h2>
-<label>اختر ملف JSON
-<input id="restoreFile" type="file" accept=".json,application/json">
-</label>
-<p class="muted">الاستعادة تستبدل البيانات الحالية. خذ نسخة احتياطية أولًا.</p>
-<button id="restoreBtn" class="danger no-print">استعادة البيانات المختارة</button>
-</div>
-
+<h2>تقرير حسابات واحة الطير</h2>
+<p id="reportDate" class="muted"></p>
 <div id="reportSummary"></div>
+<div class="actions no-print"><button id="pdfBtn">طباعة / حفظ PDF</button></div>
+<p class="muted no-print">على الآيفون: افتح الطباعة، كبّر معاينة الصفحة بإصبعين، ثم اضغط المشاركة واختر حفظ في «الملفات» بصيغة PDF.</p>
 </div>
 </section>
 
-<footer class="muted" style="text-align:center;padding:18px">
-واحة الطير • تحفظ البيانات على هذا الجهاز والمتصفح فقط. صدّر نسخة احتياطية بانتظام.
-</footer>
+<footer class="muted" style="text-align:center;padding:18px">واحة الطير</footer>
 
 <script>
-const $ = id => document.getElementById(id);
-const STORAGE_KEY = 'wahatAlTayrAccounts_v1';
-
-const categories = {
- income: ['بيع مانجو','بيع محاصيل موسمية','بيع مواشي','إيرادات أخرى'],
- expense: ['شتلات وزراعة','أسمدة ومبيدات','أنابيب وري','بذور ومحاصيل','أجور وعمالة','مواشي وأعلاف','علاج بيطري','صيانة ومعدات','نقل ووقود','مياه وكهرباء','إيجار','ديون والتزامات','مصروفات أخرى']
+const $=id=>document.getElementById(id);
+const STORAGE_KEY="wahatAlTayrAccounts_v2";
+const categories={
+income:["بيع مانجو","بيع محاصيل موسمية","بيع مواشي","إيرادات أخرى"],
+expense:["شتلات وزراعة","أسمدة ومبيدات","أنابيب وري","بذور ومحاصيل","أجور وعمالة","مواشي وأعلاف","علاج بيطري","صيانة ومعدات","نقل ووقود","مياه وكهرباء","إيجار","ديون والتزامات","مصروفات أخرى"]
 };
-
-let transactions = [];
-
-try {
- const saved = localStorage.getItem(STORAGE_KEY);
- if (saved) {
-  const data = JSON.parse(saved);
-  if (Array.isArray(data)) transactions = data;
- }
-} catch(e) {}
-
-const today = () => {
- const d = new Date();
- return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-};
-
-$('date').value = today();
-
-const money = n =>
- Number(n || 0).toLocaleString('en-US',{
-  minimumFractionDigits:3,
-  maximumFractionDigits:3
-}) + ' ر.ع';
-
-const escapeHTML = s =>
- String(s ?? '').replace(/[&<>"']/g,c=>({
-  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
- }[c]));
-
-function save() {
- try {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
-  render();
- } catch(e) {
-  alert('تعذر حفظ البيانات. صدّر نسخة احتياطية وتأكد من مساحة المتصفح.');
- }
+let transactions=[];
+try{
+const saved=localStorage.getItem(STORAGE_KEY);
+if(saved){
+const data=JSON.parse(saved);
+if(Array.isArray(data))transactions=data;
 }
+}catch(e){}
 
-function totals() {
- let income = 0, expenses = 0;
- transactions.forEach(t => {
-  if (t.type === 'income') income += Number(t.amount);
-  else expenses += Number(t.amount);
- });
- return {
-  income,
-  expenses,
-  profit: Math.round((income - expenses) * 1000) / 1000
- };
+function today(){
+const d=new Date();
+return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
-
-function renderCategories() {
- const old = $('category').value;
- const list = categories[$('type').value];
- $('category').innerHTML = list.map(c => `<option>${c}</option>`).join('');
- if (list.includes(old)) $('category').value = old;
+function money(n){
+return Number(n||0).toLocaleString("en-US",{minimumFractionDigits:3,maximumFractionDigits:3})+" ر.ع";
 }
-
-function tableHTML(items, withActions) {
- return `<table>
- <thead><tr>
- <th>التاريخ</th><th>النوع</th><th>التصنيف / البيان</th><th>المبلغ</th>
- ${withActions ? '<th class="no-print">حذف</th>' : ''}
- </tr></thead>
- <tbody>${items.map(t => `<tr>
- <td>${escapeHTML(t.date)}</td>
- <td><span class="pill ${t.type==='expense'?'expense':''}">${t.type==='income'?'دخل':'مصروف'}</span></td>
- <td><b>${escapeHTML(t.description)}</b><br>
- <span class="muted">${escapeHTML(t.category)}${t.notes?'<br>'+escapeHTML(t.notes):''}</span></td>
- <td class="${t.type==='income'?'green':'red'}">${t.type==='income'?'+':'−'}${money(t.amount)}</td>
- ${withActions?`<td class="no-print"><button class="danger delete-btn" data-delete="${escapeHTML(t.id)}">حذف</button></td>`:''}
- </tr>`).join('')}</tbody></table>`;
+function escapeHTML(s){
+return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-
-function render() {
- const t = totals();
-
- $('income').textContent = money(t.income);
- $('expenses').textContent = money(t.expenses);
- $('profit').textContent = money(t.profit);
- $('profit').className = t.profit < 0 ? 'red' : 'green';
- $('count').textContent = transactions.length;
-
- const dist = [
-  ['علي',30], ['راشد',30], ['عيسى',30], ['المزرعة',10]
- ];
- const distributable = Math.max(0, t.profit);
-
- $('distribution').innerHTML = dist.map(([n,p]) =>
-  `<tr><td>${n}</td><td>${p}%</td><td>${money(distributable*p/100)}</td></tr>`
- ).join('');
-
- const recent = [...transactions]
-  .sort((a,b)=>b.date.localeCompare(a.date)||b.created-a.created)
-  .slice(0,5);
-
- $('recent').innerHTML = recent.length
-  ? tableHTML(recent,false)
-  : '<div class="empty">لا توجد عمليات بعد. ابدأ بإضافة أول دخل أو مصروف.</div>';
-
- const filtered = transactions.filter(x =>
-  ($('filterType').value==='all'||x.type===$('filterType').value) &&
-  (`${x.description} ${x.category} ${x.notes||''}`)
-   .toLowerCase().includes($('search').value.toLowerCase())
- ).sort((a,b)=>b.date.localeCompare(a.date)||b.created-a.created);
-
- $('recordsTable').innerHTML = filtered.length
-  ? tableHTML(filtered,true)
-  : '<div class="empty">لا توجد عمليات مطابقة.</div>';
-
- $('reportSummary').innerHTML = `
- <div class="cards">
- <div class="metric"><small>إجمالي الدخل</small><strong class="green">${money(t.income)}</strong></div>
- <div class="metric"><small>إجمالي المصروفات</small><strong class="red">${money(t.expenses)}</strong></div>
- <div class="metric"><small>صافي الربح</small><strong>${money(t.profit)}</strong></div>
- </div>
- <h2 style="margin-top:18px">تفاصيل توزيع الأرباح</h2>
- <div class="tablewrap"><table>
- <thead><tr><th>المستفيد</th><th>النسبة</th><th>المبلغ</th></tr></thead>
- <tbody>${dist.map(([n,p])=>`<tr><td>${n}</td><td>${p}%</td><td>${money(distributable*p/100)}</td></tr>`).join('')}</tbody>
- </table></div>
- <h2 style="margin-top:18px">كافة العمليات</h2>
- ${transactions.length
-  ? tableHTML([...transactions].sort((a,b)=>a.date.localeCompare(b.date)),false)
-  : '<p>لا توجد عمليات مسجلة.</p>'}`;
-}
-
-$('type').addEventListener('change', renderCategories);
-
-$('entryForm').addEventListener('submit', e => {
- e.preventDefault();
- const amount = Number($('amount').value);
-
- if (!Number.isFinite(amount) || amount <= 0) {
-  alert('أدخل مبلغًا صحيحًا أكبر من صفر.');
-  return;
- }
-
- transactions.push({
-  id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random()),
-  type: $('type').value,
-  amount: Math.round(amount*1000)/1000,
-  date: $('date').value,
-  category: $('category').value,
-  description: $('description').value.trim(),
-  notes: $('notes').value.trim(),
-  created: Date.now()
- });
-
- save();
- $('entryForm').reset();
- $('date').value = today();
- renderCategories();
- showTab('dashboard');
+function totals(){
+let income=0,expenses=0;
+transactions.forEach(t=>{
+if(t.type==="income")income+=Number(t.amount);
+else expenses+=Number(t.amount);
 });
-
-document.addEventListener('click', e => {
- const b = e.target.closest('[data-delete]');
- if (b && confirm('هل تريد حذف هذه العملية؟')) {
-  transactions = transactions.filter(t => t.id !== b.dataset.delete);
-  save();
- }
-});
-
-$('filterType').addEventListener('change', render);
-$('search').addEventListener('input', render);
-
-function showTab(id) {
- document.querySelectorAll('.view').forEach(v => v.hidden = v.id !== id);
- document.querySelectorAll('.tab').forEach(b => {
-  b.classList.toggle('active', b.dataset.tab === id);
-  b.classList.toggle('secondary', b.dataset.tab !== id);
- });
- if (id === 'reports') render();
+return {income,expenses,profit:income-expenses};
 }
-
-document.querySelectorAll('.tab').forEach(b =>
- b.addEventListener('click', () => showTab(b.dataset.tab))
+function renderCategories(){
+const old=$("category").value;
+const list=categories[$("type").value];
+$("category").innerHTML=list.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join("");
+if(list.includes(old))$("category").value=old;
+}
+function tableHTML(items,withActions){
+return `<table><thead><tr><th>التاريخ</th><th>النوع</th><th>التصنيف والبيان</th><th>المبلغ</th>${withActions?'<th class="no-print">حذف</th>':""}</tr></thead><tbody>`+
+items.map(t=>`<tr>
+<td>${escapeHTML(t.date)}</td>
+<td><span class="pill ${t.type==="expense"?"expense":""}">${t.type==="income"?"دخل":"مصروف"}</span></td>
+<td><b>${escapeHTML(t.description)}</b><br><span class="muted">${escapeHTML(t.category)}${t.notes?"<br>"+escapeHTML(t.notes):""}</span></td>
+<td class="${t.type==="income"?"green":"redtext"}">${t.type==="income"?"+":"−"}${money(t.amount)}</td>
+${withActions?`<td class="no-print"><button class="danger delete-btn" data-delete="${escapeHTML(t.id)}">حذف</button></td>`:""}
+</tr>`).join("")+"</tbody></table>";
+}
+function render(){
+const t=totals();
+$("income").textContent=money(t.income);
+$("expenses").textContent=money(t.expenses);
+$("profit").textContent=money(t.profit);
+$("profit").className=t.profit<0?"redtext":"green";
+$("count").textContent=transactions.length;
+const shares=[["علي",30],["راشد",30],["عيسى",30],["المزرعة",10]];
+$("distribution").innerHTML=shares.map(([name,p])=>`<tr><td>${name}</td><td>${p}%</td><td>${money(Math.max(0,t.profit)*p/100)}</td></tr>`).join("");
+const sorted=[...transactions].sort((a,b)=>b.date.localeCompare(a.date)||b.created-a.created);
+$("recent").innerHTML=sorted.length?tableHTML(sorted.slice(0,5),false):'<div class="empty">لا توجد عمليات مسجلة حتى الآن.</div>';
+const filtered=sorted.filter(x=>
+($("filterType").value==="all"||x.type===$("filterType").value)&&
+(`${x.description} ${x.category} ${x.notes||""}`).toLowerCase().includes($("search").value.toLowerCase())
 );
-
-$('pdfBtn').addEventListener('click', () => {
- showTab('reports');
- window.print();
-});
-
-function download(name, data, type) {
- const blob = new Blob([data], {type});
- const url = URL.createObjectURL(blob);
- const a = document.createElement('a');
- a.href = url;
- a.download = name;
- document.body.appendChild(a);
- a.click();
- a.remove();
- setTimeout(() => URL.revokeObjectURL(url),1000);
+$("recordsTable").innerHTML=filtered.length?tableHTML(filtered,true):'<div class="empty">لا توجد عمليات مطابقة.</div>';
+$("reportDate").textContent="تاريخ التقرير: "+today();
+$("reportSummary").innerHTML=`
+<div class="cards">
+<div class="metric"><small>إجمالي الدخل</small><strong class="green">${money(t.income)}</strong></div>
+<div class="metric"><small>إجمالي المصروفات</small><strong class="redtext">${money(t.expenses)}</strong></div>
+<div class="metric"><small>صافي الربح</small><strong>${money(t.profit)}</strong></div>
+<div class="metric"><small>عدد العمليات</small><strong>${transactions.length}</strong></div>
+</div>
+<h2 style="margin-top:20px">توزيع الأرباح</h2>
+<table><thead><tr><th>المستفيد</th><th>النسبة</th><th>المبلغ</th></tr></thead><tbody>
+${shares.map(([name,p])=>`<tr><td>${name}</td><td>${p}%</td><td>${money(Math.max(0,t.profit)*p/100)}</td></tr>`).join("")}
+</tbody></table>
+<h2 style="margin-top:20px">تفاصيل العمليات</h2>
+${transactions.length?tableHTML([...transactions].sort((a,b)=>a.date.localeCompare(b.date)),false):"<p>لا توجد عمليات مسجلة.</p>"}`;
 }
-
-$('backupBtn').addEventListener('click', () => {
- download(
-  'wahat-al-tair-backup.json',
-  JSON.stringify({
-   app:'واحة الطير',
-   version:1,
-   exportedAt:new Date().toISOString(),
-   transactions
-  },null,2),
-  'application/json;charset=utf-8'
- );
+function save(){
+try{localStorage.setItem(STORAGE_KEY,JSON.stringify(transactions));}
+catch(e){alert("تعذر حفظ البيانات. قد تكون مساحة التخزين ممتلئة.");}
+render();
+}
+function showTab(id){
+document.querySelectorAll(".view").forEach(v=>v.hidden=v.id!==id);
+document.querySelectorAll(".tab").forEach(b=>{
+b.classList.toggle("active",b.dataset.tab===id);
+b.classList.toggle("light",b.dataset.tab!==id);
 });
-
-$('csvBtn').addEventListener('click', () => {
- const rows = [
-  ['التاريخ','النوع','التصنيف','البيان','المبلغ','ملاحظات'],
-  ...transactions.map(t=>[
-   t.date,
-   t.type==='income'?'دخل':'مصروف',
-   t.category,t.description,t.amount,t.notes||''
-  ])
- ];
- const csv = '\uFEFF' + rows.map(r =>
-  r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')
- ).join('\r\n');
-
- download('wahat-al-tair.csv',csv,'text/csv;charset=utf-8');
+render();
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
+$("type").addEventListener("change",renderCategories);
+$("entryForm").addEventListener("submit",e=>{
+e.preventDefault();
+const amount=Number($("amount").value);
+if(!Number.isFinite(amount)||amount<=0){alert("أدخل مبلغًا صحيحًا أكبر من صفر.");return;}
+transactions.push({
+id:String(Date.now())+"-"+Math.random().toString(36).slice(2),
+type:$("type").value,
+amount:Math.round(amount*1000)/1000,
+date:$("date").value,
+category:$("category").value,
+description:$("description").value.trim(),
+notes:$("notes").value.trim(),
+created:Date.now()
 });
-
-let restoreData = null;
-
-$('restoreFile').addEventListener('change', async e => {
- restoreData = null;
- const f = e.target.files[0];
- if (!f) return;
-
- try {
-  const data = JSON.parse(await f.text());
-  const arr = Array.isArray(data) ? data : data.transactions;
-
-  if (!Array.isArray(arr)) throw new Error('invalid');
-
-  if (!arr.every(t =>
-   t && ['income','expense'].includes(t.type) &&
-   Number(t.amount)>0 && t.date && t.description
-  )) throw new Error('invalid');
-
-  restoreData = arr;
- } catch(err) {
-  alert('الملف غير صالح أو لا يحتوي على عمليات مفهومة.');
- }
+save();
+$("entryForm").reset();
+$("date").value=today();
+renderCategories();
+showTab("dashboard");
 });
-
-$('restoreBtn').addEventListener('click', () => {
- if (!restoreData) {
-  alert('اختر ملف JSON صالحًا أولًا.');
-  return;
- }
-
- if (confirm('سيتم استبدال جميع العمليات الحالية بالنسخة المختارة. هل تريد المتابعة؟')) {
-  transactions = restoreData.map(t=>({
-   ...t,
-   id:t.id||String(Date.now())+Math.random(),
-   created:t.created||Date.now()
-  }));
-  save();
-  restoreData = null;
-  $('restoreFile').value = '';
-  showTab('dashboard');
-  alert('تمت استعادة البيانات على هذا الجهاز.');
- }
+document.addEventListener("click",e=>{
+const b=e.target.closest("[data-delete]");
+if(b&&confirm("هل تريد حذف هذه العملية؟")){
+transactions=transactions.filter(t=>t.id!==b.dataset.delete);
+save();
+}
 });
-
+$("filterType").addEventListener("change",render);
+$("search").addEventListener("input",render);
+$("pdfBtn").addEventListener("click",()=>window.print());
+$("entryForm").addEventListener("reset",()=>setTimeout(()=>{
+$("date").value=today();
+renderCategories();
+},0));
+$("date").value=today();
 renderCategories();
 render();
 </script>
