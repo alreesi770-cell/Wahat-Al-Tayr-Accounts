@@ -1,0 +1,467 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#214c35">
+<title>واحة الطير - الحسابات</title>
+<style>
+:root{--green:#214c35;--green2:#3d7652;--gold:#b99a4c;--paper:#f6f5ef;--ink:#243329;--red:#a23c32}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;padding:16px;max-width:900px;margin:auto}
+header{background:linear-gradient(135deg,var(--green),#37694a);color:white;border-radius:18px;padding:20px;text-align:center;border-bottom:5px solid var(--gold)}
+header h1{margin:0 0 5px;font-size:28px}
+header p{margin:0;color:#e5e9df;font-size:14px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+button{border:0;border-radius:10px;padding:11px 14px;background:var(--green);color:white;font-weight:700;font-size:14px;cursor:pointer}
+button.secondary{background:#e8e3d2;color:var(--green)}
+button.danger{background:var(--red)}
+.tab.active{background:var(--gold);color:#202b20}
+.panel{background:white;border:1px solid #e4e2d8;border-radius:15px;padding:16px;margin:12px 0;box-shadow:0 2px 8px #1b32110b}
+.panel h2{font-size:18px;margin:0 0 13px;color:var(--green)}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.metric{padding:14px;border-radius:12px;background:#f0f3ed}
+.metric small{display:block;color:#59685c}
+.metric strong{display:block;font-size:21px;margin-top:5px;overflow-wrap:anywhere}
+.green{color:var(--green2)}
+.red{color:var(--red)}
+form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:13px;font-weight:700;color:#4d5d50}
+input,select,textarea{display:block;width:100%;margin-top:5px;padding:11px;border:1px solid #d8ded4;border-radius:9px;background:#fff;color:var(--ink);font:inherit}
+textarea{min-height:70px;resize:vertical}
+.wide{grid-column:1/-1}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:right;padding:9px 7px;border-bottom:1px solid #e8e9e3;vertical-align:top}
+th{background:#edf1e9;color:var(--green)}
+.tablewrap{overflow-x:auto}
+.pill{display:inline-block;border-radius:99px;padding:3px 8px;font-size:12px;background:#e9f2e9;color:var(--green)}
+.pill.expense{background:#f8e8e6;color:var(--red)}
+.muted{color:#677268;font-size:12px}
+.empty{text-align:center;color:#7b857c;padding:20px}
+[hidden]{display:none!important}
+@media(min-width:650px){.cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media print{
+body{background:white;padding:0;max-width:none}
+header{background:#214c35!important;color:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.no-print,form,nav,.actions button,.delete-btn{display:none!important}
+.panel{box-shadow:none;break-inside:avoid;border:1px solid #bbb}
+.cards{grid-template-columns:repeat(4,1fr)}
+th{background:#edf1e9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+table{font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>واحة الطير</h1>
+<p>برنامج حسابات الدخل والمصروفات وتوزيع صافي الربح</p>
+</header>
+
+<nav class="no-print">
+<button class="tab active" data-tab="dashboard">الملخص</button>
+<button class="tab secondary" data-tab="entry">إضافة عملية</button>
+<button class="tab secondary" data-tab="records">سجل العمليات</button>
+<button class="tab secondary" data-tab="reports">التقارير والنسخ الاحتياطي</button>
+</nav>
+
+<section id="dashboard" class="view">
+<div class="panel">
+<h2>الملخص المالي</h2>
+<div class="cards">
+<div class="metric"><small>إجمالي الدخل</small><strong id="income" class="green">0.000 ر.ع</strong></div>
+<div class="metric"><small>إجمالي المصروفات</small><strong id="expenses" class="red">0.000 ر.ع</strong></div>
+<div class="metric"><small>صافي الربح</small><strong id="profit">0.000 ر.ع</strong></div>
+<div class="metric"><small>عدد العمليات</small><strong id="count">0</strong></div>
+</div>
+<p class="muted">صافي الربح = إجمالي الدخل ناقص إجمالي المصروفات. الإيجار والديون لا تخصم تلقائيًا؛ سجّلها كمصروف إذا قررتم احتسابها ضمن المصروفات.</p>
+</div>
+
+<div class="panel">
+<h2>توزيع صافي الربح</h2>
+<div class="tablewrap">
+<table>
+<thead><tr><th>المستفيد</th><th>النسبة</th><th>المبلغ المستحق</th></tr></thead>
+<tbody id="distribution"></tbody>
+</table>
+</div>
+<p class="muted">إذا كان صافي الربح سالبًا، فلن تُحسب توزيعات موجبة.</p>
+</div>
+
+<div class="panel">
+<h2>آخر العمليات</h2>
+<div id="recent"></div>
+</div>
+</section>
+
+<section id="entry" class="view" hidden>
+<div class="panel">
+<h2>تسجيل دخل أو مصروف</h2>
+<form id="entryForm">
+<label>نوع العملية
+<select id="type" required>
+<option value="income">دخل</option>
+<option value="expense">مصروف</option>
+</select>
+</label>
+
+<label>المبلغ (ريال عماني)
+<input id="amount" type="number" min="0.001" step="0.001" placeholder="125.500" required>
+</label>
+
+<label>التاريخ
+<input id="date" type="date" required>
+</label>
+
+<label>التصنيف
+<select id="category" required></select>
+</label>
+
+<label class="wide">البيان / الوصف
+<input id="description" maxlength="120" placeholder="مثال: بيع محصول مانجو" required>
+</label>
+
+<label class="wide">ملاحظات (اختياري)
+<textarea id="notes" maxlength="500" placeholder="تفاصيل إضافية"></textarea>
+</label>
+
+<div class="wide actions">
+<button type="submit">حفظ العملية</button>
+<button type="reset" class="secondary">مسح الحقول</button>
+</div>
+</form>
+</div>
+</section>
+
+<section id="records" class="view" hidden>
+<div class="panel">
+<h2>سجل العمليات</h2>
+<div class="no-print" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+<label>تصفية النوع
+<select id="filterType">
+<option value="all">الكل</option>
+<option value="income">الدخل</option>
+<option value="expense">المصروفات</option>
+</select>
+</label>
+<label>بحث في الوصف
+<input id="search" placeholder="اكتب كلمة للبحث">
+</label>
+</div>
+<div class="tablewrap" id="recordsTable"></div>
+</div>
+</section>
+
+<section id="reports" class="view" hidden>
+<div class="panel">
+<h2>التقارير والنسخ الاحتياطي</h2>
+<p>يمكنك طباعة التقرير أو حفظه PDF، وتنزيل CSV ونسخة JSON للاحتفاظ بالبيانات واستعادتها لاحقًا.</p>
+
+<div class="actions no-print">
+<button id="pdfBtn">طباعة / حفظ PDF</button>
+<button id="csvBtn" class="secondary">تنزيل CSV</button>
+<button id="backupBtn" class="secondary">تنزيل نسخة احتياطية JSON</button>
+</div>
+
+<div class="panel">
+<h2>استعادة نسخة احتياطية</h2>
+<label>اختر ملف JSON
+<input id="restoreFile" type="file" accept=".json,application/json">
+</label>
+<p class="muted">الاستعادة تستبدل البيانات الحالية. خذ نسخة احتياطية أولًا.</p>
+<button id="restoreBtn" class="danger no-print">استعادة البيانات المختارة</button>
+</div>
+
+<div id="reportSummary"></div>
+</div>
+</section>
+
+<footer class="muted" style="text-align:center;padding:18px">
+واحة الطير • تحفظ البيانات على هذا الجهاز والمتصفح فقط. صدّر نسخة احتياطية بانتظام.
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const STORAGE_KEY = 'wahatAlTayrAccounts_v1';
+
+const categories = {
+ income: ['بيع مانجو','بيع محاصيل موسمية','بيع مواشي','إيرادات أخرى'],
+ expense: ['شتلات وزراعة','أسمدة ومبيدات','أنابيب وري','بذور ومحاصيل','أجور وعمالة','مواشي وأعلاف','علاج بيطري','صيانة ومعدات','نقل ووقود','مياه وكهرباء','إيجار','ديون والتزامات','مصروفات أخرى']
+};
+
+let transactions = [];
+
+try {
+ const saved = localStorage.getItem(STORAGE_KEY);
+ if (saved) {
+  const data = JSON.parse(saved);
+  if (Array.isArray(data)) transactions = data;
+ }
+} catch(e) {}
+
+const today = () => {
+ const d = new Date();
+ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+};
+
+$('date').value = today();
+
+const money = n =>
+ Number(n || 0).toLocaleString('en-US',{
+  minimumFractionDigits:3,
+  maximumFractionDigits:3
+}) + ' ر.ع';
+
+const escapeHTML = s =>
+ String(s ?? '').replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ }[c]));
+
+function save() {
+ try {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
+  render();
+ } catch(e) {
+  alert('تعذر حفظ البيانات. صدّر نسخة احتياطية وتأكد من مساحة المتصفح.');
+ }
+}
+
+function totals() {
+ let income = 0, expenses = 0;
+ transactions.forEach(t => {
+  if (t.type === 'income') income += Number(t.amount);
+  else expenses += Number(t.amount);
+ });
+ return {
+  income,
+  expenses,
+  profit: Math.round((income - expenses) * 1000) / 1000
+ };
+}
+
+function renderCategories() {
+ const old = $('category').value;
+ const list = categories[$('type').value];
+ $('category').innerHTML = list.map(c => `<option>${c}</option>`).join('');
+ if (list.includes(old)) $('category').value = old;
+}
+
+function tableHTML(items, withActions) {
+ return `<table>
+ <thead><tr>
+ <th>التاريخ</th><th>النوع</th><th>التصنيف / البيان</th><th>المبلغ</th>
+ ${withActions ? '<th class="no-print">حذف</th>' : ''}
+ </tr></thead>
+ <tbody>${items.map(t => `<tr>
+ <td>${escapeHTML(t.date)}</td>
+ <td><span class="pill ${t.type==='expense'?'expense':''}">${t.type==='income'?'دخل':'مصروف'}</span></td>
+ <td><b>${escapeHTML(t.description)}</b><br>
+ <span class="muted">${escapeHTML(t.category)}${t.notes?'<br>'+escapeHTML(t.notes):''}</span></td>
+ <td class="${t.type==='income'?'green':'red'}">${t.type==='income'?'+':'−'}${money(t.amount)}</td>
+ ${withActions?`<td class="no-print"><button class="danger delete-btn" data-delete="${escapeHTML(t.id)}">حذف</button></td>`:''}
+ </tr>`).join('')}</tbody></table>`;
+}
+
+function render() {
+ const t = totals();
+
+ $('income').textContent = money(t.income);
+ $('expenses').textContent = money(t.expenses);
+ $('profit').textContent = money(t.profit);
+ $('profit').className = t.profit < 0 ? 'red' : 'green';
+ $('count').textContent = transactions.length;
+
+ const dist = [
+  ['علي',30], ['راشد',30], ['عيسى',30], ['المزرعة',10]
+ ];
+ const distributable = Math.max(0, t.profit);
+
+ $('distribution').innerHTML = dist.map(([n,p]) =>
+  `<tr><td>${n}</td><td>${p}%</td><td>${money(distributable*p/100)}</td></tr>`
+ ).join('');
+
+ const recent = [...transactions]
+  .sort((a,b)=>b.date.localeCompare(a.date)||b.created-a.created)
+  .slice(0,5);
+
+ $('recent').innerHTML = recent.length
+  ? tableHTML(recent,false)
+  : '<div class="empty">لا توجد عمليات بعد. ابدأ بإضافة أول دخل أو مصروف.</div>';
+
+ const filtered = transactions.filter(x =>
+  ($('filterType').value==='all'||x.type===$('filterType').value) &&
+  (`${x.description} ${x.category} ${x.notes||''}`)
+   .toLowerCase().includes($('search').value.toLowerCase())
+ ).sort((a,b)=>b.date.localeCompare(a.date)||b.created-a.created);
+
+ $('recordsTable').innerHTML = filtered.length
+  ? tableHTML(filtered,true)
+  : '<div class="empty">لا توجد عمليات مطابقة.</div>';
+
+ $('reportSummary').innerHTML = `
+ <div class="cards">
+ <div class="metric"><small>إجمالي الدخل</small><strong class="green">${money(t.income)}</strong></div>
+ <div class="metric"><small>إجمالي المصروفات</small><strong class="red">${money(t.expenses)}</strong></div>
+ <div class="metric"><small>صافي الربح</small><strong>${money(t.profit)}</strong></div>
+ </div>
+ <h2 style="margin-top:18px">تفاصيل توزيع الأرباح</h2>
+ <div class="tablewrap"><table>
+ <thead><tr><th>المستفيد</th><th>النسبة</th><th>المبلغ</th></tr></thead>
+ <tbody>${dist.map(([n,p])=>`<tr><td>${n}</td><td>${p}%</td><td>${money(distributable*p/100)}</td></tr>`).join('')}</tbody>
+ </table></div>
+ <h2 style="margin-top:18px">كافة العمليات</h2>
+ ${transactions.length
+  ? tableHTML([...transactions].sort((a,b)=>a.date.localeCompare(b.date)),false)
+  : '<p>لا توجد عمليات مسجلة.</p>'}`;
+}
+
+$('type').addEventListener('change', renderCategories);
+
+$('entryForm').addEventListener('submit', e => {
+ e.preventDefault();
+ const amount = Number($('amount').value);
+
+ if (!Number.isFinite(amount) || amount <= 0) {
+  alert('أدخل مبلغًا صحيحًا أكبر من صفر.');
+  return;
+ }
+
+ transactions.push({
+  id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random()),
+  type: $('type').value,
+  amount: Math.round(amount*1000)/1000,
+  date: $('date').value,
+  category: $('category').value,
+  description: $('description').value.trim(),
+  notes: $('notes').value.trim(),
+  created: Date.now()
+ });
+
+ save();
+ $('entryForm').reset();
+ $('date').value = today();
+ renderCategories();
+ showTab('dashboard');
+});
+
+document.addEventListener('click', e => {
+ const b = e.target.closest('[data-delete]');
+ if (b && confirm('هل تريد حذف هذه العملية؟')) {
+  transactions = transactions.filter(t => t.id !== b.dataset.delete);
+  save();
+ }
+});
+
+$('filterType').addEventListener('change', render);
+$('search').addEventListener('input', render);
+
+function showTab(id) {
+ document.querySelectorAll('.view').forEach(v => v.hidden = v.id !== id);
+ document.querySelectorAll('.tab').forEach(b => {
+  b.classList.toggle('active', b.dataset.tab === id);
+  b.classList.toggle('secondary', b.dataset.tab !== id);
+ });
+ if (id === 'reports') render();
+}
+
+document.querySelectorAll('.tab').forEach(b =>
+ b.addEventListener('click', () => showTab(b.dataset.tab))
+);
+
+$('pdfBtn').addEventListener('click', () => {
+ showTab('reports');
+ window.print();
+});
+
+function download(name, data, type) {
+ const blob = new Blob([data], {type});
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = url;
+ a.download = name;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ setTimeout(() => URL.revokeObjectURL(url),1000);
+}
+
+$('backupBtn').addEventListener('click', () => {
+ download(
+  'wahat-al-tair-backup.json',
+  JSON.stringify({
+   app:'واحة الطير',
+   version:1,
+   exportedAt:new Date().toISOString(),
+   transactions
+  },null,2),
+  'application/json;charset=utf-8'
+ );
+});
+
+$('csvBtn').addEventListener('click', () => {
+ const rows = [
+  ['التاريخ','النوع','التصنيف','البيان','المبلغ','ملاحظات'],
+  ...transactions.map(t=>[
+   t.date,
+   t.type==='income'?'دخل':'مصروف',
+   t.category,t.description,t.amount,t.notes||''
+  ])
+ ];
+ const csv = '\uFEFF' + rows.map(r =>
+  r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')
+ ).join('\r\n');
+
+ download('wahat-al-tair.csv',csv,'text/csv;charset=utf-8');
+});
+
+let restoreData = null;
+
+$('restoreFile').addEventListener('change', async e => {
+ restoreData = null;
+ const f = e.target.files[0];
+ if (!f) return;
+
+ try {
+  const data = JSON.parse(await f.text());
+  const arr = Array.isArray(data) ? data : data.transactions;
+
+  if (!Array.isArray(arr)) throw new Error('invalid');
+
+  if (!arr.every(t =>
+   t && ['income','expense'].includes(t.type) &&
+   Number(t.amount)>0 && t.date && t.description
+  )) throw new Error('invalid');
+
+  restoreData = arr;
+ } catch(err) {
+  alert('الملف غير صالح أو لا يحتوي على عمليات مفهومة.');
+ }
+});
+
+$('restoreBtn').addEventListener('click', () => {
+ if (!restoreData) {
+  alert('اختر ملف JSON صالحًا أولًا.');
+  return;
+ }
+
+ if (confirm('سيتم استبدال جميع العمليات الحالية بالنسخة المختارة. هل تريد المتابعة؟')) {
+  transactions = restoreData.map(t=>({
+   ...t,
+   id:t.id||String(Date.now())+Math.random(),
+   created:t.created||Date.now()
+  }));
+  save();
+  restoreData = null;
+  $('restoreFile').value = '';
+  showTab('dashboard');
+  alert('تمت استعادة البيانات على هذا الجهاز.');
+ }
+});
+
+renderCategories();
+render();
+</script>
+</body>
+</html>
